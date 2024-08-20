@@ -4,3 +4,4 @@ import 'dotenv/config'
 
 
 
+console.log(MY_URL);
