@@ -1,4 +1,4 @@
-import 'dotenv/config';
+
 import axios from 'axios';
 
 const API_KEY = 'live_wNJpweNeziX3slnvZae47Wje0uZ6pLfqHHL3cRFFZICVCl0aShYNsGStRonHoK8R';
