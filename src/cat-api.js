@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import axios from 'axios';
 
-const API_KEY = process.env.API_KEY;
-export const MY_URL = process.env.MY_URL;
+const API_KEY = 'live_wNJpweNeziX3slnvZae47Wje0uZ6pLfqHHL3cRFFZICVCl0aShYNsGStRonHoK8R';
+export const MY_URL = 'https://api.thecatapi.com/v1/breeds';
 
 axios.defaults.headers.common['x-api-key'] = API_KEY;
 
