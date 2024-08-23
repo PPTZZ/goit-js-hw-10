@@ -1,5 +1,9 @@
+body{
+  font-family: Arial;
+}
+
 .breed-select {
-  font-size: 40px;
+  font-size: 30px;
   font-family: Arial;
   text-align: center;
   color: charcoal;
@@ -7,7 +11,7 @@
 }
 
 .text {
-  font-family: Arial;
+  
   max-width: 500px;
 }
 .cat-info {
@@ -24,15 +28,24 @@
   justify-content: flex-end;
 }
 
+
+.cat-info__loader{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+}
+
+
 .loader {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   display: inline-block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%);
   border: 3px solid;
   border-color: #000 #000 transparent transparent;
   box-sizing: border-box;

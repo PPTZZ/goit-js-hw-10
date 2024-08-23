@@ -6,9 +6,8 @@ const ENDPOINT = 'https://api.thecatapi.com/v1';
 axios.defaults.headers.common['x-api-key'] = API_KEY;
 
 export default class CatList {
-  constructor({ selector ,isHidden=false }) {
+  constructor({ selector  }) {
     this.element = this.select(selector);
-    isHidden && this.hide()
   }
   select(selector) {
     return document.querySelector(selector);

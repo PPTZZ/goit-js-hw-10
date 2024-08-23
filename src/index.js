@@ -8,8 +8,7 @@ const display = new CatList({
   selector: '.cat-info',
 });
 const loader = new CatList({
-  selector: '.loader',
-  isHidden: true,
+  selector: '.cat-info__loader',
 });
 
 const fetchBreeds = () => {
@@ -17,11 +16,10 @@ const fetchBreeds = () => {
   selector
     .getCats()
     .then(data => {
-      if (!data) {
+      if (data) {
         // Checking for data and handiling loader
-        loader.show();
+        loader.hide();
       }
-
       const placeHolder =
         '<option value="" selected class="placeholder">Please select a cat</option>';
       selector.element.insertAdjacentHTML('afterbegin', placeHolder);
@@ -39,10 +37,6 @@ const fetchCatByBreed = id => {
   selector
     .getCatInfo(id)
     .then(data => {
-      if (!data) {
-        // Checking for data and handiling loader
-        loader.show();
-      }
       const [
         {
           url,
