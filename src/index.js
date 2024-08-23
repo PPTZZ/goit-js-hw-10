@@ -1,23 +1,29 @@
 import CatList from './cat-api.js';
+import { Notify } from 'notiflix';
 
-const selector = new CatList('.breed-select');
-const display = new CatList('.cat-info');
-
-
-const addCSS = css =>
-  (document.head.appendChild(document.createElement('style')).innerHTML = css);
+const selector = new CatList({
+  selector: '.breed-select',
+});
+const display = new CatList({
+  selector: '.cat-info',
+});
+const loader = new CatList({
+  selector: '.loader',
+  isHidden: true,
+});
 
 const fetchBreeds = () => {
   // Getting the cat list
   selector
     .getCats()
     .then(data => {
-      if (data) {
-        // Checking to see if there is any data
-        document.querySelector('.loader').style.display='none'
-        document.querySelector('.error').style.display = 'none';
+      if (!data) {
+        // Checking for data and handiling loader
+        loader.show();
       }
-      const placeHolder = '<option value="" selected>Please select a cat</option>';
+
+      const placeHolder =
+        '<option value="" selected class="placeholder">Please select a cat</option>';
       selector.element.insertAdjacentHTML('afterbegin', placeHolder);
       data.forEach(cat => {
         // Adding data from axios to selector
@@ -26,18 +32,22 @@ const fetchBreeds = () => {
         selector.element.insertAdjacentHTML('beforeend', breed);
       });
     })
-    .catch(err => console.error(err));
+    .catch(() => Notify.failure('No cats here please reload the page'));
 };
 
 const fetchCatByBreed = id => {
   selector
     .getCatInfo(id)
     .then(data => {
+      if (!data) {
+        // Checking for data and handiling loader
+        loader.show();
+      }
       const [
         {
           url,
-          breeds: [{ name, description, temperament }]
-        }
+          breeds: [{ name, description, temperament }],
+        },
       ] = data; // Destructuring data recived from axios
       const displayedCat = `<img src="${url}" alt="${name}" height="auto" width="500px"><div class="text-box">
         <h1 class="text"> ${name}</h1>
@@ -45,7 +55,7 @@ const fetchCatByBreed = id => {
         <p class="text"> ${description}</p></div>`;
       display.element.insertAdjacentHTML('afterbegin', displayedCat);
     })
-    .catch(err => console.log(err));
+    .catch(() => Notify.failure('No cats here please reload the page'));
 };
 
 const resetDisplay = () => (display.element.innerHTML = '');
@@ -53,11 +63,9 @@ const resetDisplay = () => (display.element.innerHTML = '');
 fetchBreeds();
 selector.element.addEventListener('change', e => {
   const selectedCat = e.currentTarget.value;
+  if (document.querySelector('.placeholder')) {
+    document.querySelector('.placeholder').remove();
+  }
   resetDisplay();
   fetchCatByBreed(selectedCat);
 });
-
-addCSS('.breed-select{font-size:40px; font-family:Arial; text-align:center; color:charcoal; border-radius:5px}');
-addCSS('.text{font-family:Arial; max-width:500px}');
-addCSS('.cat-info {display:flex; justify-content:center; align-items:flex-end; gap:50px; margin-top:30px}');
-addCSS('.text-box{display:flex; flex-flow:column; justify-content:flex-end;}')
