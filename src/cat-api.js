@@ -18,6 +18,7 @@ export default class CatList {
   show(){
     this.element.classList.remove('hidden')
   }
+
   async getCats() {
     try {
       const { data } = await axios.get(`${ENDPOINT}/breeds`);

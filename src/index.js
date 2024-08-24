@@ -11,6 +11,10 @@ const loader = new CatList({
   selector: '.cat-info__loader',
 });
 
+const catBox = new CatList({
+  selectorL: '#box',
+})
+
 const fetchBreeds = () => {
   // Getting the cat list
   selector
@@ -33,10 +37,17 @@ const fetchBreeds = () => {
     .catch(() => Notify.failure('No cats here please reload the page'));
 };
 
+const removeCat = ()=> {
+ console.log(display.element.innerHTML= ''); 
+}
+
 const fetchCatByBreed = id => {
   selector
     .getCatInfo(id)
     .then(data => {
+      if(data){
+        loader.hide();
+      }
       const [
         {
           url,
@@ -52,14 +63,15 @@ const fetchCatByBreed = id => {
     .catch(() => Notify.failure('No cats here please reload the page'));
 };
 
-const resetDisplay = () => (display.element.innerHTML = '');
 
-fetchBreeds();
 selector.element.addEventListener('change', e => {
+  removeCat();
+  loader.show();
   const selectedCat = e.currentTarget.value;
   if (document.querySelector('.placeholder')) {
     document.querySelector('.placeholder').remove();
   }
-  resetDisplay();
   fetchCatByBreed(selectedCat);
 });
+fetchBreeds();
+
